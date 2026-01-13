@@ -17,6 +17,8 @@ const slides = [
 	}
 ]
 
+ let indexSlide = 0
+
 //*********************************************************
 // Ecouteurs sur les fleches de gauche et droite */
 //****************************************************** */
@@ -24,14 +26,26 @@ const slides = [
 let btnFlecheGauche = document.querySelector(".arrow_left")
 
 btnFlecheGauche.addEventListener("click", () => {
-	console.log("t'as bien cliqué sur la flèche gauche")
+	console.log("t'as bien cliqué sur la flèche gauche");
+	indexSlide--;
+	if (indexSlide < 0) {indexSlide = slides.length - 1}
+	console.log(indexSlide);
+	slider(slides, indexSlide);
+
 });
 
 let btnFlecheDroite = document.querySelector(".arrow_right")
 
 btnFlecheDroite.addEventListener("click", () => {
-	console.log("T'as bien cliqué sur la flèche de droite")
+	console.log("T'as bien cliqué sur la flèche de droite");
+	indexSlide++;
+	if (indexSlide >= slides.length) {indexSlide = 0;}
+	console.log(indexSlide);
+	slider(slides, indexSlide);
+
 });
+
+
 
 let sectionDots = document.querySelector(".dots");//dit que la variable JS sectionDots est la classe css html .dots
 
@@ -59,5 +73,28 @@ function genererDots(slides) {
 
 genererDots(slides)
 
+
+let imageSlides = document.querySelector(".banner-img");
+let descriptionSlide = document.querySelector("#banner p");
+
+function slider(slides, indexSlide) {
+
+	
+    imageSlides.src = `./assets/images/slideshow/${slides[indexSlide].image}`; // le nomme par rapport au JSON image: images/xxxx.png
+
+	
+	descriptionSlide.innerHTML = slides[indexSlide].tagLine;
+
+	
+	const dotActuel = document.querySelector(".dot_selected");
+	dotActuel.classList.remove("dot_selected");
+
+	const listeDots = document.querySelectorAll(".dot");
+	listeDots[indexSlide].classList.add("dot_selected");
+
+
+}
+
+slider(slides, indexSlide);
 
 
